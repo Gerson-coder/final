@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio - Panel Estudiante</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 0; background: #f8f9fa; }
+    .header {
+      background: #3a3a3a; color: white; padding: 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header img.logo { width: 50px; }
+    .iconos-superiores i { color: white; font-size: 1.3rem; margin-left: 15px; }
+    .nota-card {
+      display: inline-block; background: white; padding: 1rem;
+      margin-right: 1rem; border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1); min-width: 220px;
+    }
+    .menu-item {
+      background: white; padding: 1rem; border-radius: 12px;
+      text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .tareas { margin-top: 2rem; max-height: 200px; overflow-y: auto; }
+    .task {
+      background: #fff; border-radius: 8px; padding: 0.75rem;
+      margin-bottom: 0.75rem; display: flex; justify-content: space-between;
+      cursor: pointer;
+    }
+    .navbar-bottom {
+      position: fixed; bottom: 0; width: 100%;
+      background: #fff; border-top: 1px solid #ddd;
+      display: flex; justify-content: space-around; padding: 0.5rem 0;
+    }
+    .nav-item {
+      color: #666; text-align: center;
+      font-size: 1.6rem; position: relative; text-decoration: none;
+    }
+    .nav-item.active::after {
+      content: ''; width: 30%; height: 3px; background-color: #3a3a3a;
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="d-flex align-items-center">
+    <img src="img/alumna.png" class="logo me-2">
+    <span>Hola, <strong>María Pérez</strong></span>
+  </div>
+  <div class="iconos-superiores">
+    <i class="bi bi-envelope-fill"></i>
+    <i class="bi bi-bell-fill"></i>
+  </div>
+</div>
+
+<div class="container mt-3">
+
+  <!-- Notas -->
+   <h6>Notas</h6>
+  <div class="notas-scroll mb-3" style="overflow-x:auto; white-space: nowrap;">
+    <div class="nota-card d-inline-block">
+      <h6>Matemáticas</h6>
+      <p>Promedio: 19</p>
+      <small>1° Bim: 18<br>2° Bim: 20<br>3° Bim: 19<br>4° Bim: 19</small>
+    </div>
+    <div class="nota-card d-inline-block">
+      <h6>Lenguaje</h6>
+      <p>Promedio: 17</p>
+      <small>1° Bim: 16<br>2° Bim: 18<br>3° Bim: 17<br>4° Bim: 17</small>
+    </div>
+    <div class="nota-card d-inline-block">
+      <h6>Historia</h6>
+      <p>Promedio: 20</p>
+      <small>1° Bim: 20<br>2° Bim: 20<br>3° Bim: 20<br>4° Bim: 20</small>
+    </div>
+  </div>
+
+  <!-- Menú -->
+  <h6>Menú principal</h6>
+  <div class="row text-center mb-4">
+    <div class="col-6"><div class="menu-item"><i class="bi bi-journal-text"></i><div>Cursos</div></div></div>
+    <div class="col-6"><div class="menu-item"><i class="bi bi-file-earmark-text"></i><div>Trámites</div></div></div>
+    <div class="col-6 mt-3"><div class="menu-item"><i class="bi bi-calendar-check"></i><div>Agenda</div></div></div>
+    <div class="col-6 mt-3"><div class="menu-item"><i class="bi bi-credit-card"></i><div>Pagos</div></div></div>
+  </div>
+
+  <!-- Tareas -->
+  <h6>Mis Tareas</h6>
+  <div class="tareas">
+    <div class="task" id="historia" data-texto="Historia: Estudiar Independencia 11/07"
+         onclick="abrirTarea('Historia','Estudiar Independencia','11/07/25','Realizar esquema y resumen','Profa. Ana Martínez')">
+      Historia: Estudiar Independencia <span>11/07/25</span>
+    </div>
+    <div class="task" id="matematicas" data-texto="Matemáticas: Práctica de fracciones 13/07"
+         onclick="abrirTarea('Matemáticas','Práctica de fracciones','13/07/25','Resolver ejercicios de fracciones equivalentes','Prof. Carlos Ruiz')">
+      Matemáticas: Práctica de fracciones <span>13/07/25</span>
+    </div>
+    <div class="task" id="lenguaje" data-texto="Lenguaje: Leer El Caballero Carmelo 15/07"
+         onclick="abrirTarea('Lenguaje','Leer El Caballero Carmelo','15/07/25','Lectura completa y responder preguntas','Profa. María León')">
+      Lenguaje: Leer El Caballero Carmelo <span>15/07/25</span>
+    </div>
+  </div>
+</div>
+
+<!-- Navegación inferior -->
+<nav class="navbar-bottom">
+  <a href="#" class="nav-item active"><i class="bi bi-house-fill"></i></a>
+  <a href="app2.html" class="nav-item"><i class="bi bi-person-fill"></i></a>
+</nav>
+
+<script>
+  // Ocultar tareas leídas si coinciden con su contenido
+  window.onload = () => {
+    const leidas = JSON.parse(localStorage.getItem("tareasLeidas") || "[]");
+    leidas.forEach(t => {
+      const tarea = document.getElementById(t.id);
+      if (tarea && tarea.dataset.texto === t.contenido) {
+        tarea.style.display = "none";
+      }
+    });
+  };
+
+  function abrirTarea(curso, titulo, fecha, descripcion, profesor) {
+    const params = new URLSearchParams({ curso, titulo, fecha, descripcion, profesor });
+    window.location.href = `tarea.html?${params.toString()}`;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalle de Tarea</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; margin: 0; padding-bottom: 60px; }
+    .header {
+      background: #3a3a3a; color: white; padding: 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .task-box {
+      background: white; margin: 1rem; padding: 1.5rem;
+      border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .toast {
+      position: fixed; bottom: 70px; left: 50%;
+      transform: translateX(-50%);
+      background: #28a745; color: white;
+      padding: 0.75rem 1rem; border-radius: 6px;
+      display: none; z-index: 1000;
+    }
+    .navbar-bottom {
+      position: fixed; bottom: 0; width: 100%;
+      background: #fff; border-top: 1px solid #ddd;
+      display: flex; justify-content: center; padding: 0.5rem 0;
+    }
+    .navbar-bottom a {
+      color: #3a3a3a; font-size: 1.8rem; position: relative; text-decoration: none;
+    }
+    .navbar-bottom a.active::after {
+      content: ''; width: 30%; height: 3px; background-color: #3a3a3a;
+      position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h6>Detalle de Tarea</h6>
+    <a href="app3.html" class="text-white"><i class="bi bi-x-lg"></i></a>
+  </div>
+
+  <div class="task-box">
+    <h6 id="curso">Curso</h6>
+    <p><strong>Profesor:</strong> <span id="profesor"></span></p>
+    <p><strong>Tarea:</strong> <span id="titulo"></span></p>
+    <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+    <p id="descripcion">Descripción</p>
+    <button class="btn btn-success w-100 mt-3" onclick="marcarLeida()">✔ Marcar como leída</button>
+  </div>
+
+  <div id="toast" class="toast">✅ Tarea marcada como leída</div>
+
+  <div class="navbar-bottom">
+    <a href="app3.html" class="active"><i class="bi bi-house-fill"></i></a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const curso = params.get("curso");
+    const titulo = params.get("titulo");
+    const fecha = params.get("fecha");
+    const descripcion = params.get("descripcion");
+    const profesor = params.get("profesor");
+
+    document.getElementById("curso").textContent = "Curso: " + curso;
+    document.getElementById("titulo").textContent = titulo;
+    document.getElementById("fecha").textContent = fecha;
+    document.getElementById("descripcion").textContent = descripcion;
+    document.getElementById("profesor").textContent = profesor;
+
+    function marcarLeida() {
+      const id = curso.toLowerCase();
+      const contenido = `${curso}: ${titulo} ${fecha}`;
+      let tareas = JSON.parse(localStorage.getItem("tareasLeidas") || "[]");
+
+      tareas = tareas.filter(t => t.id !== id);
+      tareas.push({ id, contenido });
+
+      localStorage.setItem("tareasLeidas", JSON.stringify(tareas));
+
+      const toast = document.getElementById("toast");
+      toast.style.display = "block";
+      setTimeout(() => {
+        toast.style.display = "none";
+        window.location.href = "app3.html";
+      }, 1500);
+    }
+  </script>
+
+</body>
+</html>

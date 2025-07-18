@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Profesores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #f8f9fa;
+    }
+
+    .header {
+      background-color: #3a3a3a;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .header h5 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .search-box {
+      padding: 0.5rem 1rem;
+      background: #f8f9fa;
+      position: fixed;
+      top: 56px;
+      width: 100%;
+      z-index: 999;
+    }
+
+    .contenido-scroll {
+      margin-top: 120px; /* espacio para header y buscador */
+      margin-bottom: 65px; /* espacio para nav inferior */
+      padding: 0 1rem;
+      overflow-y: auto;
+    }
+
+    .profesor-item {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .profesor-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profesor-nombre {
+      font-weight: bold;
+    }
+
+    .btn-mensaje {
+      font-size: 1.4rem;
+      color: #3a3a3a;
+      text-decoration: none;
+    }
+
+    .nav-inferior {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      padding: 0.5rem 0;
+      display: flex;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .nav-inferior a {
+      color: #3a3a3a;
+      font-size: 1.6rem;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h5>Lista de Profesores</h5>
+  </div>
+
+  <div class="search-box">
+    <input type="text" class="form-control" placeholder="Buscar profesor..." id="buscador" onkeyup="filtrarProfesores()">
+  </div>
+
+  <div class="contenido-scroll" id="lista-profesores">
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Ana Martínez</span>
+        <small>Historia</small>
+      </div>
+      <a href="mensaje.html?profesor=Ana%20Martínez&curso=Historia" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Carlos Ruiz</span>
+        <small>Matemáticas</small>
+      </div>
+      <a href="mensaje.html?profesor=Carlos%20Ruiz&curso=Matemáticas" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">María León</span>
+        <small>Lenguaje</small>
+      </div>
+      <a href="mensaje.html?profesor=María%20León&curso=Lenguaje" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Marco León</span>
+        <small>Geografía</small>
+      </div>
+      <a href="mensaje.html?profesor=Marco%20León&curso=Geografía" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Carlos Soza</span>
+        <small>Física</small>
+      </div>
+      <a href="mensaje.html?profesor=Carlos%20Soza&curso=Física" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Connor Mcgregor</span>
+        <small>Boxeo</small>
+      </div>
+      <a href="mensaje.html?profesor=Connor%20Mcgregor&curso=Boxeo" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Dwayne Jhonson</span>
+        <small>Educación Física</small>
+      </div>
+      <a href="mensaje.html?profesor=Dwayne%20Jhonson&curso=Boxeo" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Jose Rojas</span>
+        <small>Álgebra</small>
+      </div>
+      <a href="mensaje.html?profesor=Jose%20Rojas&curso=Álgebra" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+    <div class="profesor-item">
+      <div class="profesor-info">
+        <span class="profesor-nombre">Melissa Mendez</span>
+        <small>Razonamiento Matemático</small>
+      </div>
+      <a href="mensaje.html?profesor=Melissa%20Mendez&curso=Razonamiento Matemático" class="btn-mensaje"><i class="bi bi-envelope-fill"></i></a>
+    </div>
+  </div>
+
+  <div class="nav-inferior">
+    <a href="app3.html"><i class="bi bi-house-fill"></i></a>
+  </div>
+
+  <script>
+    function filtrarProfesores() {
+      const input = document.getElementById("buscador").value.toLowerCase();
+      const profesores = document.querySelectorAll(".profesor-item");
+      profesores.forEach(p => {
+        const nombre = p.querySelector(".profesor-nombre").innerText.toLowerCase();
+        p.style.display = nombre.includes(input) ? "flex" : "none";
+      });
+    }
+  </script>
+
+</body>
+</html>
